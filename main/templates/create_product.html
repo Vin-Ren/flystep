@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flystep</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body data-theme="emerald">
+  <div class="flex flex-col gap-4 p-16 justify-center items-center">
+    <form method="POST" class="card bg-base-100 w-96 shadow-sm ">
+      {% csrf_token %}
+      <div class="card-body [&>*]:font-bold text-start">
+        <h2 class="card-title">Add a product</h2>
+        {{ form.as_table }}
+        <div class="card-actions justify-end">
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

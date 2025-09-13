@@ -26,7 +26,7 @@
         <p class="pb-6">
           Class: {{ user.class }}
         </p>
-        <button class="btn btn-primary" onclick="alert('Hohoho!')">Click me!</button>
+        <a class="btn btn-primary" href="{% url 'main:render_create_product' %}">Add a product!</a>
       </div>
     </div>
   </div>
@@ -43,7 +43,7 @@
           <h2 class="card-title">{{ prod.name }}</h2>
           <p>{{ prod.description }}</p>
           <div class="card-actions justify-end">
-            <button class="btn btn-primary" onclick="alert('Service Unavailable.');">Buy Now</button>
+            <a class="btn btn-primary" href="{% url 'main:render_product_details' prod.id %}">Check its details!</a>
           </div>
         </div>
       </div>
