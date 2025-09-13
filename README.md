@@ -78,10 +78,10 @@ Sesuai dengan kepanjangan CSRF yakni _cross site request forgery_, token ini ada
 -
 
 ### 7. Dokumentasi pemanggilan API XML dan JSON
-[dokumentasi xml all](./assets/tugas2/postman-xml-all.png)
-[dokumentasi xml single](./assets/tugas2/postman-xml-single.png)
-[dokumentasi json all](./assets/tugas2/postman-json-all.png)
-[dokumentasi json single](./assets/tugas2/postman-json-single.png)
+![dokumentasi xml all](./assets/tugas2/postman-xml-all.png)
+![dokumentasi xml single](./assets/tugas2/postman-xml-single.png)
+![dokumentasi json all](./assets/tugas2/postman-json-all.png)
+![dokumentasi json single](./assets/tugas2/postman-json-single.png)
 
 ---
 
