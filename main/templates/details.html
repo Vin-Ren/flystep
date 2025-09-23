@@ -10,6 +10,7 @@
       <span>Thumbnail: <img src="{{ product.thumbnail }}" alt="Image for {{ product.name }}" /></span>
       <span>Created at: {{ product.created_at }}</span>
       <span>Updated at: {{ product.updated_at }}</span>
+      <span>Owner: {{ product.user.username | default:"Unknown" }}</span>
     </div>
   </div>
 {% endblock content %}

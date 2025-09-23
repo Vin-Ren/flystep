@@ -15,12 +15,18 @@
         <p class="pb-6">
           Class: {{ user.class }}
         </p>
+        <p class="pb-6">
+          Last login: {{ user.last_login }}
+        </p>
         <a class="btn btn-primary" href="{% url 'main:render_create_product' %}">Add a product!</a>
+        <a class="btn btn-error" href="{% url 'main:render_logout' %}">Logout</a>
       </div>
     </div>
   </div>
 
-  <div class="flex flex-row gap-4 p-16">
+  <div class="flex flex-col gap-4 p-16 items-center">
+  <h1 class="text-3xl font-bold">Products</h1>
+  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-16">
     {% for prod in products %}
       <div class="card bg-base-100 w-96 shadow-sm">
         <figure class="flex-3/4">
@@ -37,5 +43,6 @@
         </div>
       </div>
     {% endfor %}
+  </div>
   </div>
 {% endblock content %}

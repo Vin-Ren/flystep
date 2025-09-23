@@ -4,7 +4,7 @@
         <form method="POST" class="card bg-base-100 w-96 shadow-sm">
         {% csrf_token %}
         <div class="card-body [&>*]:font-bold text-start">
-            <h2 class="card-title">Register</h2>
+            <h2 class="card-title">Login</h2>
             {{ form.as_table }}
             <div class="card-actions justify-end">
                 <button class="btn btn-primary" type="submit">Submit</button>
@@ -17,6 +17,7 @@
             <li>{{ message }}</li>
             {% endfor %}
         </ul>
-        {% endif %} 
+        {% endif %} Don't have an account yet?
+        <a href="{% url 'main:render_register' %}" class="btn btn-secondary">Register Now</a>
     </div>
 {% endblock %}

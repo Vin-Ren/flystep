@@ -7,7 +7,10 @@ The deployment for this project can be found [here](https://vincent-valentino-fl
 
 # Jawaban Tugas
 
-## Tugas 1
+## Tugas 2
+
+<details>
+<summary>Jawaban tugas 1</summary>
 
 ### 1. Cara penyelesaian checklist
 - Menentukan tema kecil, akhirnya menetapkan tema kecil pada pakaian dan sepatu dalam olahraga.
@@ -47,9 +50,20 @@ Saya dapat mengemukakan beberapa asumsi untuk hal ini, seperti penggunaan bahasa
 ### 6. Feedback untuk asisten dosen tutorial sebelumnya
 Sudah cukup baik, walaupun secara online, asisten dosen selalu tersedia di voice channel di discord dan sangat mudah mendapatkan bantuan apabila diperlukan. Dalam pengerjaan tutorial sebenarnya terlalu banyak yang diberikan kepada mahasiswa, sehingga kami seperti tinggal melakukan copy and paste terhadap dokumennya mengingat constraint waktu. Namun setelah dibaca kembali, saya rasa website pbp ini sangat informatif dan sangat dapat digunakan terutama dalam pembelajaran ulang.
 
+</details>
+
+
+
 ---
 
-## Tugas 2
+
+
+## Tugas 3
+
+
+<details>
+<summary>Jawaban Tugas 3</summary>
+
 ### 1. Keperluan Data Delivery Dalam Implementasi Sebuah Platform
 Suatu aplikasi memerlukan data delivery sebagai penyokong fungsionalitas tambahan, tanpa data delivery, suatu website hanya bisa menampilkan static page. Data delivery sangat diperlukan untuk melakukan CRUD pada aplikasi secara langsung, pengeksposan REST API untuk konsumsi eksternal dan lain-lain.
 
@@ -83,7 +97,50 @@ Sesuai dengan kepanjangan CSRF yakni _cross site request forgery_, token ini ada
 ![dokumentasi json all](./assets/tugas2/postman-json-all.png)
 ![dokumentasi json single](./assets/tugas2/postman-json-single.png)
 
+
+</details>
+
+
 ---
+
+## Tugas 4
+<details>
+<summary>Jawaban tugas 4</summary>
+
+### 1. Django Authentication form beserta plus minusnya
+Sebuah form built-in milik django untuk melakukan otentikasi terhadap user. Dengan adanya form ini, kita dapat dengan mudah membuat sebuah form baru, dengan `{{form.as_table}}` atau sebagainya. Form ini sepaket dengan model user dan registration form yang dimiliki django (berasal dari django.contrib.auth), semua ini membantu memudahkan pengembangan aplikasi, tetapi sangat mengorbankan fleksibilitas (seperti untuk menambahkan field dan mengubah UI).
+
+
+### 2. Otentikasi vs Otorisasi
+Otentikasi contohnya adalah seorang user login, berarti mencakup tentang proses verifikasi siapa user itu
+Otoriasasi contohnya melalui decorator login_required, memastikan apakah seorang user memiliki izin yang cukup.
+
+Adapun Django memberikan module `django.contrib.auth` untuk memudahkan kita. Otentikasi dapat dilakukan dengan menggunakan `AuthenticationForm` dan `UserCreationForm`, sedangkan otorisasi dapat digunakan dengan decorator seperti `login_required` maupun `permission_required(NAMA_PERMISSION)`.
+
+
+### 3. Session vs Cookie dalam penyimpanan state
+Data dalam session adalah data yang disimpan di dalam server dimana kita memiliki sessionIdnya, dan data dalam cookie adalah data yang ada dalam komputer kita dan dikirimkan setiap request menuju server. Umumnya session digunakan untuk data-data yang lebih sensitif dan cookie digunakan untuk data yang kurang sensitif, karena lebih rentan terkena serangan. 
+
+
+### 4. Keamanan Cookies
+Tidak aman tanpa pengaturan yang tepat, rentan terhadap XSS, CSRF, dkk. Django menyediakan beberapa pengaturan dalam `settings.py` untuk menghindari serangan-serangan ini, antara lain `SESSION_COOKIE_SECURE` dan `CSRF_COOKIE_SECURE`.
+
+
+### 5. Checklist
+- Memperbaiki error2 yang ada sebelumnya
+- Membuat foreign relation ke user dari model product
+- Membuat migrasi yang diperlukan dan melakukan migrasi
+- Membuat view register, login, dan logout sambil membuat template yang diperlukan dari template2 sebelumnya
+- Menambahkan cookie ketika login dan menghilangkannya ketika logout
+- Menambahkan decorator login_required ke endpoint main dan create product.
+- Menambahkan informasi tentang user di create product dan menambahkan informasi last login di main page.
+- Menambahkan dummy product dan dummy user
+
+</details>
+
+
+---
+
 
 Thank you for reading this far!
 
