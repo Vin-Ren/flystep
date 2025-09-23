@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flystep</title>
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
-
-<body data-theme="emerald">
+{% extends "base.html" %}
+{% block content %}
   <div class="hero bg-base-200 min-h-[50vh]">
     <div class="hero-content flex-col lg:flex-row">
       <img src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
@@ -49,5 +38,4 @@
       </div>
     {% endfor %}
   </div>
-</body>
-</html>
+{% endblock content %}
