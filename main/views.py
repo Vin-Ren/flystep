@@ -74,14 +74,12 @@ def render_product_details(req: HttpRequest, id):
 
 
 def render_register(req: HttpRequest):
-    form = UserCreationForm()
+    form = UserCreationForm(req.POST or None)
 
-    if req.method == "POST":
-        form = UserCreationForm(req.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(req, 'Your account has been successfully created!')
-            return redirect('main:render_login')
+    if req.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(req, 'Your account has been successfully created!')
+        return redirect('main:render_login')
     ctx = {
         'form':form
     }
@@ -89,7 +87,7 @@ def render_register(req: HttpRequest):
 
 def render_login(req: HttpRequest):
     if req.method == "POST":
-        form = AuthenticationForm(req, data=req.POST)
+        form = AuthenticationForm(data=req.POST or None)
         if form.is_valid():
             user = form.get_user()
             login(req, user)
@@ -97,7 +95,7 @@ def render_login(req: HttpRequest):
             resp.set_cookie('last_login', datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
             return resp
     else:
-        form = AuthenticationForm()
+        form = AuthenticationForm(req)
     ctx = {
         'form' : form
     }
