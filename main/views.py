@@ -72,14 +72,14 @@ def render_product_details(req: HttpRequest, id):
     }
     return render(req, 'details.html', context=ctx)
 
-
 def render_register(req: HttpRequest):
-    form = UserCreationForm(req.POST or None)
-
-    if req.method == "POST" and form.is_valid():
-        form.save()
-        messages.success(req, 'Your account has been successfully created!')
-        return redirect('main:render_login')
+    form = UserCreationForm()
+    if req.method == "POST":
+        form = UserCreationForm(req.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(req, 'Your account has been successfully created!')
+            return redirect('main:render_login')
     ctx = {
         'form':form
     }
