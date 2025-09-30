@@ -142,6 +142,43 @@ Tidak aman tanpa pengaturan yang tepat, rentan terhadap XSS, CSRF, dkk. Django m
 ---
 
 
+## Tugas 5
+
+<details>
+<summary>Jawaban Tugas 5</summary>
+
+### 1. Urutan Prioritas CSS Selector
+Ditentukan dengan konsiderasi spesifisitas dan urutan kode ketika terjadi tie. Dari spesifisitas tertinggi hingga terendah: Inline css, ID selector, Class/pseudo-class/attribute selector, dan tag selector.
+Adapun suatu keyword lain dalam CSS yang dapat digunakan untuk meningkatkan prioritas suatu properti dalam sebuah selector, yakni `!important`, ini akan mengalahkan spesifisitas yang lain, namun jika terjadi tie, akan tetap dilakukan tie breaker dengan memerhatikan urutan (yang terakhir yang digunakan).
+
+
+### 2. Pentingnya Responsive Design
+Responsive design memudahkan pengguna mengakses website kita dalam berbagai form factor, kita juga tidak perlu membuat 2 aplikasi yang sepenuhnya berbeda untuk berbagai device, hanya perlu satu website yang responsif. Website yang responsive juga meningkatkan UX dan juga SEO. Contoh web yang telah menerapkan ini misalnya Instagram dan Tokopedia, contoh web yang masih belum menerapkannya misalnya SiakNG, perbedaan terbesarnya adalah pengalaman pengunaan pada mobile device, web seperti SiakNG harus di zoom dan banyak digerakan, karena dibuat bukan untuk pengguna mobile.
+
+
+### 3. Margin, Border, dan Padding
+![Box Model Image](./assets/tugas5/box-model.png)
+Sesuai gambar diatas, Margin, Border dan Padding menyusun sesuatu yang dinamakan Box Model. Margin merupakan ruang di luar elemen, border merupakan ruang tepat pada pembatas elemen, dan padding merupakan ruang di dalam elemen, di antara konten dan border.
+
+### 4. Flex dan Grid
+Flexbox sangat baik dalam menata elemen yang ingin disusun dalam 1 dimensi, seperti menjadi sebuah barisan maupun kolom, flexbox memberikan kemampuan bagi direct childrennya untuk melakukan resizing dan repositioning seperlunya, contoh penggunaannya adalah navbar. Sedangkan Grid sangat baik dalam menata elemen dalam struktur 2 dimensi, seperti galeri, bento-style, dsb yang lebih teratur. 
+
+
+### 5. Checklist
+- Instalasi whitenoise dan setup static folder
+- Membuat view baru untuk page edit dan delete
+- Menambahkan property untuk model product, agar formatting harga menjadi lebih sederhana.
+- Mengembangkan tampilan dan mencari stock image yang sesuai untuk aplikasi.
+
+</details>
+
+
+---
+
+
+
 Thank you for reading this far!
+
+
 
 
