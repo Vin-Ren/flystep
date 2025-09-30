@@ -1,0 +1,16 @@
+<nav class="navbar bg-base-100">
+  <div class="flex-1">
+    <a class="btn btn-ghost normal-case text-xl gap-0 font-semibold" href="{% url 'main:show_main' %}"><span class="text-primary">Fly</span>step</a>
+  </div>
+  <div class="flex-none">
+    <ul class="menu menu-horizontal p-0">
+      <li><a href="{% url 'main:show_main' %}">Home</a></li>
+      <li><a href="{% url 'main:render_create_product' %}">Create Product</a></li>
+      {% if user.is_authenticated %}
+        <li><a href="{% url 'main:render_logout' %}">Logout</a></li>
+      {% else %}
+        <li><a href="{% url 'main:render_login' %}">Login</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>

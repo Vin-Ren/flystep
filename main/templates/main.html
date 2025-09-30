@@ -1,48 +1,73 @@
 {% extends "base.html" %}
-{% block content %}
-  <div class="hero bg-base-200 min-h-[50vh]">
-    <div class="hero-content flex-col lg:flex-row">
-      <img src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-        class="max-w-sm rounded-lg shadow-2xl" />
-      <div>
-        <h1 class="text-5xl font-bold">Welcome to Flystep!</h1>
-        <p class="pt-6">
-          Built by: {{ user.name }}
-        </p>
-        <p class="">
-          NPM: {{ user.npm }}
-        </p>
-        <p class="pb-6">
-          Class: {{ user.class }}
-        </p>
-        <p class="pb-6">
-          Last login: {{ user.last_login }}
-        </p>
-        <a class="btn btn-primary" href="{% url 'main:render_create_product' %}">Add a product!</a>
-        <a class="btn btn-error" href="{% url 'main:render_logout' %}">Logout</a>
+{% block content %}        
+  <!-- Hero Section -->
+  <div class="hero min-h-screen relative overflow-hidden" style="display: grid; grid-template-areas: 'stack'; place-items: center;">
+    <!-- Background Image with Gradient Overlay -->
+    <div class="absolute inset-0 w-full h-full" style="grid-area: stack;">
+      <img src="https://images.pexels.com/photos/786003/pexels-photo-786003.jpeg"
+        class="w-full h-full object-cover opacity-100" />
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
+    </div>
+    
+    <!-- Content Layer -->
+    <div class="text-center text-neutral-content relative z-10 bg-gradient-to-b from-transparent via-base-200/50 to-base-200" style="grid-area: stack;">
+      <div class="max-w-4xl">
+        <h1 class="text-6xl font-bold mb-6 text-white drop-shadow-lg">Welcome to <span class="text-primary drop-shadow-lg">Flystep</span></h1>
+        <p class="text-xl mb-8 text-white drop-shadow-md">Your premium destination for athletic footwear and sports gear. Step into the future of performance.</p>
+
+        <!-- Action Buttons -->
+        {% comment %} <div class="flex flex-col sm:flex-row gap-4 px-4 max-md:items-center">
+          <a class="btn btn-primary btn-md max-md:w-fit" href="{% url 'main:render_create_product' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Add New Product
+          </a>
+          <a class="btn btn-outline btn-md max-md:w-fit" href="{% url 'main:render_logout' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            Logout
+          </a>
+        </div> {% endcomment %}
       </div>
     </div>
   </div>
 
-  <div class="flex flex-col gap-4 p-16 items-center">
-  <h1 class="text-3xl font-bold">Products</h1>
-  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-16">
-    {% for prod in products %}
-      <div class="card bg-base-100 w-96 shadow-sm">
-        <figure class="flex-3/4">
-          <img
-            src="{{ prod.thumbnail }}"
-            alt="{{ prod.name }} Image" />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">{{ prod.name }}</h2>
-          <p>{{ prod.description }}</p>
-          <div class="card-actions justify-end">
-            <a class="btn btn-primary" href="{% url 'main:render_product_details' prod.id %}">Check its details!</a>
-          </div>
-        </div>
+  <!-- Products Section -->
+  <div class="bg-base-100 py-16">
+    <div class="container mx-auto px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-base-content mb-4">Our Products</h2>
+        <p class="text-lg text-base-content/70 max-w-2xl mx-auto">
+          Discover our premium collection of athletic footwear designed for performance and style.
+        </p>
       </div>
-    {% endfor %}
-  </div>
+      
+      <div class="flex flex-wrap gap-4 justify-center">
+        {% if products|length == 0 %}
+          <div class="text-center py-12">
+            <div class="max-w-md mx-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto text-base-content/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M9 9h6" />
+              </svg>
+              <h3 class="text-2xl font-bold text-base-content mb-2">No Products Yet</h3>
+              <p class="text-base-content/70 mb-6">Start building your inventory by adding your first product.</p>
+              <a class="btn btn-primary" href="{% url 'main:render_create_product' %}">Add Your First Product</a>
+            </div>
+          </div>
+        {% endif %}
+        
+        {% for prod in products %}
+          {% include 'partials/product_card.html' with product=prod %}
+        {% endfor %}
+      </div>
+    </div>
   </div>
 {% endblock content %}
+
+{% block footer %}
+  <div>
+    <p>{{ person.name }} | {{ person.npm }} | {{ person.class }} | Last login: {{ person.last_login }}</p>
+  </div>
+{% endblock footer %}

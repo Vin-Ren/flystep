@@ -12,7 +12,17 @@
 </head>
 
 <body data-theme="emerald">
+  {% include "navbar.html" %}
+  <main class="bg-base-100 min-h-[90vh]">
     {% block content %}
     {% endblock %}
+  </main>
+  <footer class="footer footer-center p-4 bg-base-300 text-base-content">
+    {% block footer %}
+    <div>
+      <p>Vincent Valentino Oei | 2406353225 | PBP E</p>
+    </div>
+    {% endblock %}
+  </footer>
 </body>
 </html>

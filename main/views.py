@@ -18,7 +18,7 @@ from .models import Product
 @login_required(login_url='/login')
 def render_main(req: HttpRequest):
     context = {
-        'user': {
+        'person': {
             'name': 'Vincent Valentino Oei',
             'npm': '2406353225',
             'class': 'PBP E',

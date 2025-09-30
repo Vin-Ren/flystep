@@ -1,0 +1,37 @@
+<a href="{% url 'main:render_product_details' product.id %}" class="block">
+  <div class="card w-72 h-96 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer relative overflow-hidden" 
+       style="display: grid; grid-template-areas: 'stack'; place-items: end;">
+    
+    <!-- Background Image -->
+    <div class="absolute inset-0 w-full h-full" style="grid-area: stack;">
+      <img src="{{ product.thumbnail }}" 
+           alt="{{ product.name }} Image"
+           class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+      <!-- Gradient Overlay -->
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black"></div>
+    </div>
+    
+    <!-- Content Layer -->
+    <div class="relative z-10 text-white p-6 w-full" style="grid-area: stack; align-self: end;">
+      <div class="mb-3">
+        <h2 class="text-2xl font-bold text-white drop-shadow-lg mb-2">
+          {{ product.name }}
+        </h2>
+        <p class="text-white/90 drop-shadow-md line-clamp-2 text-sm leading-relaxed">{{ product.description }}</p>
+      </div>
+      
+      <!-- Bottom Row: NEW Badge and View Details -->
+      <div class="flex items-center justify-between mt-3">
+        <div class="bg-white text-black px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-xl border-2 border-white/20 backdrop-blur-sm">
+          New
+        </div>
+        <div class="flex items-center opacity-70 hover:opacity-100 transition-opacity">
+          <span class="text-xs text-white drop-shadow-md mr-2 font-medium">View Details</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>
