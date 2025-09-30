@@ -65,6 +65,25 @@ def render_create_product(req: HttpRequest):
     
     return render(req, "create_product.html", context=ctx)
 
+@login_required(login_url='/login')
+def render_edit_product(req: HttpRequest, id):
+    product = get_object_or_404(Product, pk=id)
+    form = ProductForm(req.POST or None, instance=product)
+
+    if req.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('main:show_main')
+    ctx = {
+        'form': form
+    }
+    return render(req, "edit_product.html", context=ctx)
+
+@login_required(login_url='/login')
+def render_delete_product(req: HttpRequest, id):
+    product = get_object_or_404(Product, pk=id)
+    product.delete()
+    return redirect('main:show_main')
+
 def render_product_details(req: HttpRequest, id):
     product = get_object_or_404(Product, pk=id)
     ctx = {

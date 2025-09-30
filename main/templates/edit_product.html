@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="flex flex-col gap-4 p-16 justify-center items-center">
+    <form method="POST" class="card bg-base-100 w-96 shadow-sm ">
+      {% csrf_token %}
+      <div class="card-body [&>*]:font-bold text-start">
+        <h2 class="card-title">Edit a product</h2>
+        {{ form.as_table }}
+        <div class="card-actions justify-end">
+          <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock content %}

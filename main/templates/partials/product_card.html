@@ -20,16 +20,44 @@
         <p class="text-white/90 drop-shadow-md line-clamp-2 text-sm leading-relaxed">{{ product.description }}</p>
       </div>
       
-      <!-- Bottom Row: NEW Badge and View Details -->
+      <!-- Bottom Row: NEW Badge and Actions -->
       <div class="flex items-center justify-between mt-3">
+        {% if product.is_featured %}
         <div class="bg-white text-black px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-xl border-2 border-white/20 backdrop-blur-sm">
-          New
+          Featured
         </div>
-        <div class="flex items-center opacity-70 hover:opacity-100 transition-opacity">
-          <span class="text-xs text-white drop-shadow-md mr-2 font-medium">View Details</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
+        {% endif %}
+        
+        <div class="">
+          {% if product.user == user %}
+            <!-- Owner Actions -->
+            <div class="flex flex-row items-center gap-1 opacity-80 hover:opacity-100 transition-opacity">
+              <form method="get" action="{% url 'main:render_edit_product' product.id %}" class="inline" onclick="event.stopPropagation();">
+                <button type="submit" class="btn btn-xs bg-white/20 hover:bg-white/30 text-white border-white/30 hover:border-white/50 transition-all duration-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </button>
+              </form>
+              <form method="post" action="{% url 'main:render_delete_product' product.id %}" class="inline" onclick="event.stopPropagation();">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-xs bg-red-500/20 hover:bg-red-500/30 text-white border-red-500/30 hover:border-red-500/50 transition-all duration-200" 
+                        onclick="return confirm('Are you sure you want to delete {{ product.name }}?')">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </form>
+            </div>
+          {% else %}
+            <!-- Non-Owner View Details -->
+            <div class="flex items-center opacity-70 hover:opacity-100 transition-opacity">
+              <span class="text-xs text-white drop-shadow-md mr-2 font-medium">View Details</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
