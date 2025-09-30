@@ -17,6 +17,12 @@ from .models import Product
 # Create your views here.
 @login_required(login_url='/login')
 def render_main(req: HttpRequest):
+    filters = req.GET.get('filter', 'all')
+    if filters == 'mine':
+        products = Product.objects.filter(user=req.user)
+    else:
+        products = Product.objects.all()
+    
     context = {
         'person': {
             'name': 'Vincent Valentino Oei',
@@ -24,7 +30,7 @@ def render_main(req: HttpRequest):
             'class': 'PBP E',
             'last_login': req.COOKIES.get('last_login', 'Never')
         },
-        'products': Product.objects.all()
+        'products': products
     }
     
     return render(req, "main.html", context=context)

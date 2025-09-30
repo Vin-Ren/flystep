@@ -13,3 +13,8 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) # New product spotlight
     updated_at = models.DateTimeField(auto_now=True) # Kalo ada update, mungkin temporary featured?
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) # Punya siapa 
+    
+    @property
+    def formatted_price(self):
+        """Format price to Indonesian Rupiah with thousand separators"""
+        return f"Rp {self.price:,.0f}"

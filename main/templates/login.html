@@ -1,23 +1,79 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="flex flex-col gap-4 p-16 justify-center items-center">
-        <form method="POST" class="card bg-base-100 w-96 shadow-sm">
+  <div class="min-h-screen bg-gradient-to-br from-base-200 to-base-300 flex items-center justify-center p-8">
+    <div class="w-full max-w-md">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-base-content mb-4">
+          Welcome <span class="text-primary">Back</span>
+        </h1>
+        <p class="text-base-content/70 text-lg">
+          Sign in to your account
+        </p>
+      </div>
+
+      <form method="POST" class="card bg-base-100 shadow-2xl border border-base-300/20 backdrop-blur-sm">
         {% csrf_token %}
-        <div class="card-body [&>*]:font-bold text-start">
-            <h2 class="card-title">Login</h2>
-            {{ form.as_table }}
-            <div class="card-actions justify-end">
-                <button class="btn btn-primary" type="submit">Submit</button>
-            </div>
-        </div>
-        </form>
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
+        <div class="card-body p-8">
+          <div class="space-y-6">
+            {% for field in form %}
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-semibold text-base-content">{{ field.label }}</span>
+                  {% if field.field.required %}
+                    <span class="label-text-alt text-error">*</span>
+                  {% endif %}
+                </label>
+                
+                <input type="{{ field.field.widget.input_type|default:"text" }}" name="{{ field.name }}" value="{{ field.value|default_if_none:"" }}" class="input input-bordered input-lg w-full bg-base-200/50 focus:bg-base-100 transition-colors duration-200" {% if field.field.required %}required{% endif %} placeholder="Enter your {{ field.label|lower }}...">
+                
+                {% if field.errors %}
+                  <label class="label text-wrap">
+                    <span class="label-text-alt text-error">{{ field.errors.0 }}</span>
+                  </label>
+                {% endif %}
+                
+                {% if field.help_text %}
+                  <label class="label text-wrap">
+                    <span class="label-text-alt text-base-content/60">{{ field.help_text }}</span>
+                  </label>
+                {% endif %}
+              </div>
             {% endfor %}
-        </ul>
-        {% endif %} Don't have an account yet?
-        <a href="{% url 'main:render_register' %}" class="btn btn-secondary">Register Now</a>
+          </div>
+
+          {% if messages %}
+            <div class="mt-4">
+              {% for message in messages %}
+                <div class="alert alert-error shadow-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>{{ message }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <div class="mt-8">
+            <button type="submit" class="btn btn-primary btn-lg w-full shadow-lg hover:shadow-xl transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+              </svg>
+              Sign In
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="text-center mt-6">
+        <p class="text-base-content/60 mb-4">Don't have an account yet?</p>
+        <a href="{% url 'main:render_register' %}" class="btn btn-outline btn-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-5-5a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          Create Account
+        </a>
+      </div>
     </div>
+  </div>
 {% endblock %}

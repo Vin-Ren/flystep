@@ -1,15 +1,77 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="flex flex-col gap-4 p-16 justify-center items-center">
-    <form method="POST" class="card bg-base-100 w-96 shadow-sm ">
-      {% csrf_token %}
-      <div class="card-body [&>*]:font-bold text-start">
-        <h2 class="card-title">Edit a product</h2>
-        {{ form.as_table }}
-        <div class="card-actions justify-end">
-          <button class="btn btn-primary" type="submit">Save</button>
-        </div>
+  <div class="min-h-screen bg-gradient-to-br from-base-200 to-base-300 flex items-center justify-center p-8">
+    <div class="w-full max-w-2xl">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-base-content mb-4">
+          <span class="text-primary">Edit</span> Product
+        </h1>
+        <p class="text-base-content/70 text-lg">
+          Update your product information below
+        </p>
       </div>
-    </form>
+
+      <form method="POST" class="card bg-base-100 shadow-2xl border border-base-300/20 backdrop-blur-sm">
+        {% csrf_token %}
+        <div class="card-body p-8">
+          <div class="space-y-6">
+            {% for field in form %}
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-semibold text-base-content">{{ field.label }}</span>
+                  {% if field.field.required %}
+                    <span class="label-text-alt text-error">*</span>
+                  {% endif %}
+                </label>
+                
+                {% if field.name == 'description' %}
+                  <textarea name="{{ field.name }}" class="textarea textarea-bordered textarea-lg w-full bg-base-200/50 focus:bg-base-100 transition-colors duration-200" {% if field.field.required %}required{% endif %}>{{ field.value|default:"" }}</textarea>
+                {% elif field.name == 'is_featured' %}
+                  <div class="flex items-center space-x-3 p-4 bg-base-200/30 rounded-lg">
+                    <input type="checkbox" name="{{ field.name }}" class="checkbox checkbox-primary checkbox-lg" {% if field.value %}checked{% endif %}>
+                    <span class="text-base-content/70">Mark this product as featured</span>
+                  </div>
+                {% else %}
+                  {{ field }}
+                {% endif %}
+                
+                {% if field.errors %}
+                  <label class="label">
+                    <span class="label-text-alt text-error">{{ field.errors.0 }}</span>
+                  </label>
+                {% endif %}
+                
+                {% if field.help_text %}
+                  <label class="label">
+                    <span class="label-text-alt text-base-content/60">{{ field.help_text }}</span>
+                  </label>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="card-actions justify-between items-center mt-8 pt-6 border-t border-base-300/30">
+            <a href="{% url 'main:show_main' %}" class="btn btn-ghost btn-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Cancel
+            </a>
+            <button type="submit" class="btn btn-primary btn-lg shadow-lg hover:shadow-xl transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="text-center mt-6">
+        <p class="text-base-content/50 text-sm">
+          All fields marked with <span class="text-error">*</span> are required
+        </p>
+      </div>
+    </div>
   </div>
 {% endblock content %}
