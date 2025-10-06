@@ -11,48 +11,52 @@
         </p>
       </div>
 
-      <form method="POST" class="card bg-base-100 shadow-2xl border border-base-300/20 backdrop-blur-sm">
+      <form id="registerForm" class="card bg-base-100 shadow-2xl border border-base-300/20 backdrop-blur-sm">
         {% csrf_token %}
         <div class="card-body p-8">
           <div class="space-y-6">
-            {% for field in form %}
-              <div class="form-control">
-                <label class="label">
-                  <span class="label-text font-semibold text-base-content">{{ field.label }}</span>
-                  {% if field.field.required %}
-                    <span class="label-text-alt text-error">*</span>
-                  {% endif %}
-                </label>
-                
-                <input type="{{ field.field.widget.input_type|default:"text" }}" name="{{ field.name }}" value="{{ field.value|default_if_none:"" }}" class="input input-bordered input-lg w-full bg-base-200/50 focus:bg-base-100 transition-colors duration-200" {% if field.field.required %}required{% endif %} placeholder="Enter {{ field.label|lower }}...">
-                
-                {% if field.errors %}
-                  <label class="label text-wrap">
-                    <span class="label-text-alt text-error">{{ field.errors.0 }}</span>
-                  </label>
-                {% endif %}
-                
-                {% if field.help_text %}
-                  <label class="label text-wrap">
-                    <span class="label-text-alt text-base-content/60">{{ field.help_text }}</span>
-                  </label>
-                {% endif %}
-              </div>
-            {% endfor %}
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold text-base-content">Username</span>
+                <span class="label-text-alt text-error">*</span>
+              </label>
+              <input type="text" name="username" id="username" class="input input-bordered input-lg w-full bg-base-200/50 focus:bg-base-100 transition-colors duration-200" required placeholder="Enter username...">
+              <label class="label text-wrap">
+                <span class="label-text-alt text-error" id="username-error"></span>
+              </label>
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold text-base-content">Password</span>
+                <span class="label-text-alt text-error">*</span>
+              </label>
+              <input type="password" name="password1" id="password1" class="input input-bordered input-lg w-full bg-base-200/50 focus:bg-base-100 transition-colors duration-200" required placeholder="Enter password...">
+              <label class="label text-wrap">
+                <span class="label-text-alt text-error" id="password1-error"></span>
+              </label>
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold text-base-content">Password confirmation</span>
+                <span class="label-text-alt text-error">*</span>
+              </label>
+              <input type="password" name="password2" id="password2" class="input input-bordered input-lg w-full bg-base-200/50 focus:bg-base-100 transition-colors duration-200" required placeholder="Confirm password...">
+              <label class="label text-wrap">
+                <span class="label-text-alt text-error" id="password2-error"></span>
+              </label>
+            </div>
           </div>
 
-          {% if messages %}
-            <div class="mt-4">
-              {% for message in messages %}
-                <div class="alert alert-success shadow-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>{{ message }}</span>
-                </div>
-              {% endfor %}
+          <div id="success-message" class="mt-4 hidden">
+            <div class="alert alert-success shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span id="success-text"></span>
             </div>
-          {% endif %}
+          </div>
 
           <div class="mt-8">
             <button type="submit" class="btn btn-secondary btn-lg w-full shadow-lg hover:shadow-xl transition-all duration-300">
@@ -82,4 +86,55 @@
       </div>
     </div>
   </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Clear previous errors
+      document.getElementById('success-message').classList.add('hidden');
+      document.getElementById('username-error').textContent = '';
+      document.getElementById('password1-error').textContent = '';
+      document.getElementById('password2-error').textContent = '';
+
+      const formData = new FormData(this);
+      showToast('Loading...', 'Please wait while we register you.', 'info');
+      try {
+        const response = await fetch("{% url 'main:register_ajax' %}", {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+          }
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+          document.getElementById('success-message').classList.remove('hidden');
+          document.getElementById('success-text').textContent = data.message;
+          showToast('Success!', data.message, 'success');
+          
+          // Redirect to login after 2 seconds
+          setTimeout(() => {
+            window.location.href = "{% url 'main:render_login' %}";
+          }, 2000);
+        } else {
+          // Display field-specific errors
+          if (data.errors) {
+            for (const [field, errors] of Object.entries(data.errors)) {
+              const errorElement = document.getElementById(`${field}-error`);
+              if (errorElement) {
+                errorElement.textContent = errors.join(', ');
+              }
+            }
+          }
+          showToast('Error', 'Please fix the errors and try again', 'error');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showToast('Error', 'An error occurred during registration', 'error');
+      }
+    });
+  </script>
 {% endblock %}

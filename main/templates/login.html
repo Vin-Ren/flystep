@@ -11,48 +11,41 @@
         </p>
       </div>
 
-      <form method="POST" class="card bg-base-100 shadow-2xl border border-base-300/20 backdrop-blur-sm">
+      <form id="loginForm" class="card bg-base-100 shadow-2xl border border-base-300/20 backdrop-blur-sm">
         {% csrf_token %}
         <div class="card-body p-8">
           <div class="space-y-6">
-            {% for field in form %}
-              <div class="form-control">
-                <label class="label">
-                  <span class="label-text font-semibold text-base-content">{{ field.label }}</span>
-                  {% if field.field.required %}
-                    <span class="label-text-alt text-error">*</span>
-                  {% endif %}
-                </label>
-                
-                <input type="{{ field.field.widget.input_type|default:"text" }}" name="{{ field.name }}" value="{{ field.value|default_if_none:"" }}" class="input input-bordered input-lg w-full bg-base-200/50 focus:bg-base-100 transition-colors duration-200" {% if field.field.required %}required{% endif %} placeholder="Enter your {{ field.label|lower }}...">
-                
-                {% if field.errors %}
-                  <label class="label text-wrap">
-                    <span class="label-text-alt text-error">{{ field.errors.0 }}</span>
-                  </label>
-                {% endif %}
-                
-                {% if field.help_text %}
-                  <label class="label text-wrap">
-                    <span class="label-text-alt text-base-content/60">{{ field.help_text }}</span>
-                  </label>
-                {% endif %}
-              </div>
-            {% endfor %}
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold text-base-content">Username</span>
+                <span class="label-text-alt text-error">*</span>
+              </label>
+              <input type="text" name="username" id="username" class="input input-bordered input-lg w-full bg-base-200/50 focus:bg-base-100 transition-colors duration-200" required placeholder="Enter your username...">
+              <label class="label text-wrap">
+                <span class="label-text-alt text-error" id="username-error"></span>
+              </label>
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold text-base-content">Password</span>
+                <span class="label-text-alt text-error">*</span>
+              </label>
+              <input type="password" name="password" id="password" class="input input-bordered input-lg w-full bg-base-200/50 focus:bg-base-100 transition-colors duration-200" required placeholder="Enter your password...">
+              <label class="label text-wrap">
+                <span class="label-text-alt text-error" id="password-error"></span>
+              </label>
+            </div>
           </div>
 
-          {% if messages %}
-            <div class="mt-4">
-              {% for message in messages %}
-                <div class="alert alert-error shadow-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>{{ message }}</span>
-                </div>
-              {% endfor %}
+          <div id="error-message" class="mt-4 hidden">
+            <div class="alert alert-error shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span id="error-text"></span>
             </div>
-          {% endif %}
+          </div>
 
           <div class="mt-8">
             <button type="submit" class="btn btn-secondary btn-lg w-full shadow-lg hover:shadow-xl transition-all duration-300">
@@ -76,4 +69,43 @@
       </div>
     </div>
   </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Clear previous errors
+      document.getElementById('error-message').classList.add('hidden');
+      document.getElementById('username-error').textContent = '';
+      document.getElementById('password-error').textContent = '';
+
+      const formData = new FormData(this);
+      showToast('Loading...', 'Please wait while we log you in.', 'info');
+      try {
+        const response = await fetch("{% url 'main:login_ajax' %}", {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+          }
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+          showToast('Success!', data.message, 'success');
+          setTimeout(() => {
+            window.location.href = "{% url 'main:show_main' %}";
+          }, 1000);
+        } else {
+          document.getElementById('error-message').classList.remove('hidden');
+          document.getElementById('error-text').textContent = data.message;
+          showToast('Error', data.message, 'error');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showToast('Error', 'An error occurred during login', 'error');
+      }
+    });
+  </script>
 {% endblock %}

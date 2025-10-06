@@ -9,10 +9,10 @@
   <div class="flex-none hidden md:flex">
     <ul class="menu menu-horizontal p-0">
       <li><a href="{% url 'main:show_main' %}">Home</a></li>
-      <li><a href="{% url 'main:show_main' %}?filter=mine">My Products</a></li>
-      <li><a href="{% url 'main:render_create_product' %}">Create Product</a></li>
+      {% comment %} <li><a href="{% url 'main:show_main' %}?filter=mine">My Products</a></li> {% endcomment %}
+      {% comment %} <li><a href="{% url 'main:render_create_product' %}">Create Product</a></li> {% endcomment %}
       {% if user.is_authenticated %}
-        <li><a href="{% url 'main:render_logout' %}" class="text-red-400">Logout</a></li>
+        <li><button onclick="showToast('Logging out', 'Please wait...');setTimeout(() => { window.location.href='{% url 'main:render_logout' %}' }, 1000);" class="text-red-400">Logout</button></li>
       {% else %}
         <li><a href="{% url 'main:render_login' %}" class="text-green-400">Login</a></li>
       {% endif %}

@@ -68,7 +68,7 @@
                 </div>
               </div>
 
-              {% if user == product.user %}
+              {% comment %} {% if user == product.user %}
                 <div class="flex flex-col sm:flex-row gap-3">
                   <a href="{% url 'main:render_edit_product' product.pk %}" class="btn btn-primary btn-lg w-fit">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -86,11 +86,11 @@
                     </button>
                   </form>
                 </div>
-              {% else %}
+              {% else %} {% endcomment %}
                 <div class="text-center p-4 bg-base-200/30 rounded-lg">
                   <p class="text-base-content/60">Contact <strong>{{ product.user.username|default:"the owner" }}</strong> to purchase this product</p>
                 </div>
-              {% endif %}
+              {% comment %} {% endif %} {% endcomment %}
             </div>
           </div>
         </div>

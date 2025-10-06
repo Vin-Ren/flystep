@@ -8,12 +8,14 @@
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
   <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
   
   {% block meta %} {% endblock meta %}
 </head>
 
 <body data-theme="emerald">
+  {% csrf_token %}
   {% include "navbar.html" %}
   <main class="bg-base-100 min-h-[90vh]">
     {% block content %}
@@ -26,5 +28,7 @@
     </div>
     {% endblock %}
   </footer>
+  {% include "toast.html" %}
+  {% include "modal.html" %}
 </body>
 </html>

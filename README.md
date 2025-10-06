@@ -176,6 +176,36 @@ Flexbox sangat baik dalam menata elemen yang ingin disusun dalam 1 dimensi, sepe
 ---
 
 
+## Tugas 6
+
+<details>
+<summary>Jawaban Tugas 6</summary>
+
+### 1. Perbedaan Sync & Async Request
+Sync akan menghasilkan behaviour blocking, sedangkan Async akan menghasilkan behavious non-blocking, artinya, ketika kita melakukan sync request, browser akan "hang" sampai request terpenuhi, sedangkan ketika kita melakukan async request, browser akan tetap responsif sambil menunggu hasil request tersebut.
+
+
+### 2. Alur Kerja AJAX di Django
+![Illustrasi Pembantu](./assets/tugas6/illust-soal-2.png)
+Awalnya Akan dilakukan fetch seperti normal, namun untuk pembaruan laman, dilakukan melalui AJAX, hampir setiap aksi user akan dilakukan melalui ajax: dipicu user, kemudian melalui javascript, browser akan hit API dari app, kemudian menunggu respons (non-blocking), dan akhirnya memperbarui tampilan.
+
+### 3. Keuntungan Penggunaan AJAX Dibanding Render Biasa Django
+Render biasa perlu melakukan render ulang sepenuhnya ke sebuah webpage ketika ada komponen yang berubah, sehingga membuat response time semakin lambat, selain itu, dengan adanya AJAX, aplikasi web menjadi lebih interaktif, setiap aksi hanya perlu berinteraksi dengan API dengan medium yang ringan seperti JSON, memungkinkan aksi-aksi kecil mendapatkan feedback jauh lebih cepat dari biasanya. 
+
+
+### 4. Memastikan keamanan Endpoint Register dan Login dengan AJAX
+Tentunya kita dapat menggunakan csrf token kembali untuk menghentikan serangan cross site scripting, selain itu, validasi input harus selalu dilakukan pada client dan server untuk menjaga pengalaman pengguna yang baik.
+
+
+### 5. Pengaruh AJAX Terhadap UX
+Website terasa lebih cepat dan responsif, interaksi menjadi lebih cepat dan natural, namun penanganan akan error-error yang muncul dari endpoint harus diterapkan dengan baik, jika tidak, pengalaman pengguna akan menurun jauh (dapat diimplementasikan dengan toasts, dsb). 
+
+
+</details>
+
+
+---
+
 
 Thank you for reading this far!
 
