@@ -225,7 +225,6 @@ def create_product_ajax(req: HttpRequest):
 
 @login_required(login_url='/login')
 def edit_product_ajax(req: HttpRequest, id):
-    """Edit product via AJAX"""
     product = get_object_or_404(Product, pk=id)
     
     if product.user != req.user:
@@ -267,6 +266,8 @@ def edit_product_ajax(req: HttpRequest, id):
 def delete_product_ajax(req: HttpRequest, id):
     if req.method == 'DELETE':
         product = get_object_or_404(Product, pk=id)
+        if product.user != req.user:
+            return JsonResponse({'status': 'error', 'message': 'Unauthorized'}, status=403)
         
         product_name = product.name
         product.delete()
