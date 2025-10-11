@@ -1,6 +1,5 @@
 <script>
     let currentFilter = 'all';
-
     async function refreshProducts() {
         const container = document.getElementById('products-container');
         showLoadingState(container);
@@ -396,4 +395,5 @@
     document.addEventListener('DOMContentLoaded', function() {
         refreshProducts();
     });
+
 </script>

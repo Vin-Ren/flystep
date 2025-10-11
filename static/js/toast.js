@@ -36,8 +36,8 @@ function showToast(title, message, type = 'normal', duration = 3000) {
     toastComponent.classList.add('opacity-100', 'translate-y-0');
 
     // Auto-hide after duration
-    clearTimeout(__toastTimeout);
-    __toastTimeout = setTimeout(() => {
+    clearTimeout(window.__toastTimeout);
+    window.__toastTimeout = setTimeout(() => {
         toastComponent.classList.remove('opacity-100', 'translate-y-0');
         toastComponent.classList.add('opacity-0', 'translate-y-20');
     }, duration);
